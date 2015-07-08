@@ -1,0 +1,23 @@
+DATA SEGMENT
+   ARR DW 50H,10H,20H,10H,05H
+   LEN EQU ($-ARR)/2
+   DIF DW ?
+DATA ENDS
+CODE SEGMENT
+  ASSUME CS:CODE,DS:DATA
+  START: MOV AX,DATA
+         MOV DS,AX
+         LEA SI,ARR
+         CLC
+         MOV CX,LEN-1
+         MOV AX,[SI]
+   UP: SUB AX,[SI+2]
+       INC SI
+       INC SI
+       DEC CX
+       JNZ UP
+       MOV DIF,AX
+       MOV AH,4CH
+       INT 21H
+CODE ENDS
+END START
